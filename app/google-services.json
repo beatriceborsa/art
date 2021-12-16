@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "425485238461",
+    "firebase_url": "https://lifizone-2-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "lifizone-2",
+    "storage_bucket": "lifizone-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425485238461:android:a7f77bf869881f323f37d4",
+        "android_client_info": {
+          "package_name": "tobe.vlc.lifiart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425485238461-d4bi16e0dcfvfcpeconi416t6ihsugn8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3hp5gGT0M_P-eMowDuN-u6KXDlZU9Q-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425485238461-d4bi16e0dcfvfcpeconi416t6ihsugn8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "425485238461-vijg1lr7h324q75bph0lts9m8hm3sof7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tobesrl.vlc.lifizone2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425485238461:android:0a4e422547c125e53f37d4",
+        "android_client_info": {
+          "package_name": "tobe.vlc.lifizone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425485238461-d4bi16e0dcfvfcpeconi416t6ihsugn8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3hp5gGT0M_P-eMowDuN-u6KXDlZU9Q-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425485238461-d4bi16e0dcfvfcpeconi416t6ihsugn8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "425485238461-vijg1lr7h324q75bph0lts9m8hm3sof7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tobesrl.vlc.lifizone2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

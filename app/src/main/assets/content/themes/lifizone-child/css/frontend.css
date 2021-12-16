@@ -1,0 +1,18 @@
+.blind-button {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,0,.8);
+    z-index: 99999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blind-button .blind-button--content {
+    flex: 0 0 400px;
+    text-align: center;
+}

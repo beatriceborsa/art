@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,7 +13,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -32,7 +30,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import tobe.vlc.lifiart.Constants.Localization_System;
-import tobe.vlc.lifiart.R;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -66,18 +63,15 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-       });
+        });
         setContentView(myWebView);
         myWebView.loadUrl(HOMEPAGE_URL);
-        myWebView.addJavascriptInterface(new WebAppInterface(this,this), "Android");
+        myWebView.addJavascriptInterface(new WebAppInterface(this, this), "Android");
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
-
-
-
 
 
         //Update Locations
@@ -104,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         //Viene fatto nell 'handler di sign.
 
 
-
     }
 
     @Override
@@ -112,15 +105,15 @@ public class MainActivity extends AppCompatActivity {
         myWebView.loadUrl(HOMEPAGE_URL);
     }
 
-    public void setContentByTextId(String locationId, String zoneId){
+    public void setContentByTextId(String locationId, String zoneId) {
 
         boolean zone_found = false;
-        for(int i = 0; i < LocationsManager.getInstance().getZones().length(); i++){
+        for (int i = 0; i < LocationsManager.getInstance().getZones().length(); i++) {
             JSONObject zone = null;
             try {
                 zone = LocationsManager.getInstance().getZones().getJSONObject(i);
-                if(zone.getString("offline-location-code").equalsIgnoreCase(locationId) && zone.getString("offline-zone-code").equalsIgnoreCase(zoneId)){
-                    String url  = zone.getString("zone-content");
+                if (zone.getString("offline-location-code").equalsIgnoreCase(locationId) && zone.getString("offline-zone-code").equalsIgnoreCase(zoneId)) {
+                    String url = zone.getString("zone-content");
                     zone_found = true;
                     Toast.makeText(getBaseContext(), "Caricamento",
                             Toast.LENGTH_LONG).show();
@@ -136,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        if(!zone_found)
+        if (!zone_found)
             Toast.makeText(getBaseContext(), "Codici non riconosciuti",
                     Toast.LENGTH_LONG).show();
     }
@@ -198,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                         current_longitude,
                         Double.parseDouble(zone.getString("zone-lat").replace(",", ".")),
                         Double.parseDouble(zone.getString("zone-long").replace(",", ".")));
-                        System.out.println(zone.getString("id") +" a "+current_distance);
+                System.out.println(zone.getString("id") + " a " + current_distance);
 
                 if (current_distance < min_distance) {
                     if (Double.parseDouble(zone.getString("zone-precision")) > current_distance) {
@@ -283,10 +276,10 @@ public class MainActivity extends AppCompatActivity {
             //System.out.println("*******"+location.get(IndoorPositioning.Listener.LOCATION_LATITUDE));
             //System.out.println("*******"+location.get(IndoorPositioning.Listener.LOCATION_LONGITUDE));
 
-            Double local_lat  = Double.parseDouble(location.get(IndoorPositioning.Listener.LOCATION_LATITUDE).toString());
+            Double local_lat = Double.parseDouble(location.get(IndoorPositioning.Listener.LOCATION_LATITUDE).toString());
             Double local_long = Double.parseDouble(location.get(IndoorPositioning.Listener.LOCATION_LONGITUDE).toString());
 
-            if(local_lat.equals(current_latitude) && local_long.equals(current_longitude)){
+            if (local_lat.equals(current_latitude) && local_long.equals(current_longitude)) {
                 return;
             }
 
@@ -300,51 +293,45 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-                JSONObject new_closer_location = getCloserLocation();
-                try {
-                if (new_closer_location!= null && !closer_location_id.equals(new_closer_location.getString("location-id"))) {
+            JSONObject new_closer_location = getCloserLocation();
+            try {
+                if (new_closer_location != null && !closer_location_id.equals(new_closer_location.getString("location-id"))) {
                     closer_location_id = new_closer_location.getString("location-id");
 
 
-                        closer_location = LocationsManager.getInstance().getLocations().getJSONObject(closer_location_id);
-                        setTitle("LiFi Zone - "+closer_location.getString("location-name"));
-                        if (closer_location.getString("location-protocol").equals("z1")) {
-                            indoorPositioning.stop();
-                            localization_system = Localization_System.Z1;
-                            Toast.makeText(getApplicationContext(), "Attivo Z1",
-                                    Toast.LENGTH_LONG).show();
-                            startZero1Vlc();
-                        }
-
-
-
+                    closer_location = LocationsManager.getInstance().getLocations().getJSONObject(closer_location_id);
+                    setTitle("LiFi Zone - " + closer_location.getString("location-name"));
+                    if (closer_location.getString("location-protocol").equals("z1")) {
+                        indoorPositioning.stop();
+                        localization_system = Localization_System.Z1;
+                        Toast.makeText(getApplicationContext(), "Attivo Z1",
+                                Toast.LENGTH_LONG).show();
+                        startZero1Vlc();
+                    }
 
 
 //Add 16 nov 2021
-                        else{
-                            indoorPositioning.stop();
-                            indoorPositioning.setConfiguration(closer_location.getString("sig-auth-code"));
-                            indoorPositioning.setHeadingOrientation(IndoorPositioningHeadingOrientation.PORTRAIT);
-                            indoorPositioning.register(indoorPositioningListener, handler);
-                            indoorPositioning.start();
-                        }
+                    else {
+                        indoorPositioning.stop();
+                        indoorPositioning.setConfiguration(closer_location.getString("sig-auth-code"));
+                        indoorPositioning.setHeadingOrientation(IndoorPositioningHeadingOrientation.PORTRAIT);
+                        indoorPositioning.register(indoorPositioningListener, handler);
+                        indoorPositioning.start();
+                    }
 
 
+                    Double distance = Double.parseDouble(closer_location.getString("current-distance"));
+                    showAlert("Sei stato localizzato vicino a " +
+                            closer_location.getString("location-name") +
+                            " a " +
+                            distance.intValue()
+                            + " metri.");
 
 
-                        Double distance = Double.parseDouble(closer_location.getString("current-distance"));
-                        showAlert("Sei stato localizzato vicino a " +
-                                closer_location.getString("location-name") +
-                                " a " +
-                                distance.intValue()
-                                + " metri.");
-
-
-
-                        }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
             if (current_precision > 1) {
@@ -352,12 +339,12 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject closer_zone = getCloserZone();
 
-                    if(closer_zone == null){
+                    if (closer_zone == null) {
                         return;
                     }
 
-                    if( current_zone == null || (
-                            !closer_zone.getString("id").equals(current_zone.getString("id")))){
+                    if (current_zone == null || (
+                            !closer_zone.getString("id").equals(current_zone.getString("id")))) {
                         current_zone = closer_zone;
                         System.out.println(closer_zone.getString("zone-content"));
                         String url = closer_zone.getString("zone-content");
@@ -365,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
 
-                                    myWebView.loadUrl(url);
+                                myWebView.loadUrl(url);
 
                             }
                         });
@@ -376,13 +363,12 @@ public class MainActivity extends AppCompatActivity {
                     }
 
 
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
-  System.out.println(current_zone);
+            System.out.println(current_zone);
             //handleNewZone();
 
         }
@@ -403,12 +389,10 @@ public class MainActivity extends AppCompatActivity {
     private void handleNewZone() {
 
 
-
     }
 
 
-
-    public void showAlert(String text){
+    public void showAlert(String text) {
         new AlertDialog.Builder(MainActivity.this)
                 .setTitle("Location")
                 .setMessage(text)
@@ -520,17 +504,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
     private String getContentFromZ1ID(String id) {
 
         String to_return = null;
 
-        for (int i = 0; i < LocationsManager.getInstance().getZones().length(); i++){
-            try{
+        for (int i = 0; i < LocationsManager.getInstance().getZones().length(); i++) {
+            try {
                 JSONObject zone = LocationsManager.getInstance().getZones().getJSONObject(i);
-                if(zone.getString("zone-z1-id").equalsIgnoreCase(id)){
+                if (zone.getString("zone-z1-id").equalsIgnoreCase(id)) {
                     to_return = zone.getString("zone-content");
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
